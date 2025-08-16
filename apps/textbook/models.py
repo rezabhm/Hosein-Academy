@@ -8,7 +8,7 @@ class TextBook(BaseModel):
     and an uploaded PDF file.
     """
     title = models.CharField(max_length=255)  # Title of the textbook
-    body = models.TextField()                 # Description or content
+    description = models.TextField()                 # Description or content
     pdf_file = models.FileField(upload_to="textbooks/", verbose_name="PDF File")  
     # FileField with upload path set to 'media/textbooks/'
 

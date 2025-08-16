@@ -11,7 +11,7 @@ class StudentInformationAdmin(admin.ModelAdmin):
 
 @admin.register(OtpCode)
 class OtpCodeAdmin(admin.ModelAdmin):
-    list_display = ("user", "code", "created")   # Fields displayed in list view
+    list_display = ("user", "code", "create_at")   # Fields displayed in list view
     search_fields = ("user__username", "code")   # Searchable fields in admin
 
 

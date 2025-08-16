@@ -7,9 +7,12 @@ from django.utils import timezone
 
 class BaseModel(models.Model):
 
-    slug = models.SlugField(unique=True)
-    create_at = models.DateTimeField(default=timezone.now)
-    update_at = models.DateTimeField(default=timezone.now)
+    slug = models.SlugField(unique=True, null=True)
+    create_at = models.DateTimeField(default=timezone.now, null=True)
+    update_at = models.DateTimeField(default=timezone.now, null=True)
+
+    class Meta:
+        abstract = True
 
     def save(
         self,
@@ -71,17 +74,17 @@ class OtpCode(BaseModel):
     """
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     code = models.CharField(max_length=6)  # 6-digit code (supports leading zeros like 000123)
-    created = models.DateTimeField(auto_now_add=True)  # Auto-set on creation
+    # created = models.DateTimeField(auto_now_add=True)  # Auto-set on creation
 
     def __str__(self):
-        return f'User: {self.user.username}, Code: {self.code}, Created: {self.created}'
+        return f'User: {self.user.username}, Code: {self.code}, Created: {self.create_at}'
 
     def is_valid(self):
         """
         Returns True if OTP is still valid (within 2 minutes of creation).
         Otherwise returns False.
         """
-        expire_time = self.created + timedelta(minutes=2)
+        expire_time = self.create_at + timedelta(minutes=2)
         return datetime.now() <= expire_time
 
 
