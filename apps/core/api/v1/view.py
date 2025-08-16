@@ -21,7 +21,7 @@ class StudentInformationAdminAPIView(
 ):
     
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAdminUser]
     serializer_class = StudentInformationSerializer
     queryset = StudentInformation.objects.all()
     
@@ -38,7 +38,7 @@ class TeacherAdminAPIView(
 ):
     
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAdminUser]
     serializer_class = TeacherSerializer
     queryset = Teacher.objects.all()
     
