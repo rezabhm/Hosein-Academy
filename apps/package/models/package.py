@@ -1,7 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from apps.package.models.insights import Category
 from apps.core.models import Teacher
 
 
@@ -45,7 +44,7 @@ class Course(models.Model):
         help_text=_("Discounted price of the course in the smallest currency unit.")
     )
     categories = models.ManyToManyField(
-        Category,
+        'package.Category',
         related_name='courses',
         verbose_name=_("Categories"),
         help_text=_("Categories associated with this course.")

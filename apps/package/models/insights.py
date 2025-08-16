@@ -2,8 +2,6 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from apps.package.models.package import Course
-
 
 class Category(models.Model):
     """
@@ -39,7 +37,7 @@ class FAQ(models.Model):
         help_text=_("The answer text for the FAQ.")
     )
     course = models.ForeignKey(
-        Course,
+        'package.Course',
         on_delete=models.CASCADE,
         related_name='faqs',
         verbose_name=_("Course"),
@@ -68,7 +66,7 @@ class Comment(models.Model):
         help_text=_("The user who posted the comment.")
     )
     course = models.ForeignKey(
-        Course,
+        'package.Course',
         on_delete=models.CASCADE,
         related_name='comments',
         verbose_name=_("Course"),
