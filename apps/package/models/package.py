@@ -1,10 +1,10 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from apps.core.models import Teacher
+from apps.core.models import Teacher, BaseModel
 
 
-class Course(models.Model):
+class Course(BaseModel):
     """
     Represents a course in the educational platform.
     Stores course metadata, pricing, and relationships with categories and teachers.
@@ -70,7 +70,7 @@ class Course(models.Model):
         return self.title
 
 
-class Season(models.Model):
+class Season(BaseModel):
     """
     Represents a season within a course.
     A season is a collection of lessons under a specific course.
@@ -97,7 +97,7 @@ class Season(models.Model):
         return f"{self.course.title} - {self.name}"
 
 
-class Lesson(models.Model):
+class Lesson(BaseModel):
     """
     Represents a single lesson within a season.
     Stores lesson metadata including video link and duration.

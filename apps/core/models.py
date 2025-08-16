@@ -1,9 +1,34 @@
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime, timedelta
+from django.utils.text import slugify
+from django.utils import timezone
 
 
-class StudentInformation(models.Model):
+class BaseModel(models.Model):
+
+    slug = models.SlugField(unique=True)
+    create_at = models.DateTimeField(default=timezone.now)
+    update_at = models.DateTimeField(default=timezone.now)
+
+    def save(
+        self,
+        *args,
+        **kwargs,
+    ):
+
+        self.update_at = timezone.now()
+
+        if self.create_at is None:
+            self.create_at = timezone.now()
+
+        if self.slug is None:
+            self.slug = slugify(f'{self.create_at}+{self.update_at}')
+
+        super().save(*args, **kwargs)
+
+
+class StudentInformation(BaseModel):
     """
     Stores additional information about each student.
     Connected with Django's default User model using OneToOne relation.
@@ -39,7 +64,7 @@ class StudentInformation(models.Model):
         return f'User: {self.user.get_full_name()} - Year: {self.get_year_display()}'
 
 
-class OtpCode(models.Model):
+class OtpCode(BaseModel):
     """
     Stores OTP (One Time Password) for user verification.
     Each user can have only one OTP at a time.
@@ -60,7 +85,7 @@ class OtpCode(models.Model):
         return datetime.now() <= expire_time
 
 
-class Teacher(models.Model):
+class Teacher(BaseModel):
     """
     Stores information about teachers.
     """

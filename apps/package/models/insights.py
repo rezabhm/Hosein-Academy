@@ -2,8 +2,10 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from apps.core.models import BaseModel
 
-class Category(models.Model):
+
+class Category(BaseModel):
     """
     Represents a category for organizing courses.
     Stores the category title and enables association with multiple courses.
@@ -23,7 +25,7 @@ class Category(models.Model):
         return self.title
 
 
-class FAQ(models.Model):
+class FAQ(BaseModel):
     """
     Represents a Frequently Asked Question (FAQ) related to a course.
     Stores the question, answer, and associated course.
@@ -53,7 +55,7 @@ class FAQ(models.Model):
         return f"FAQ: {self.question[:50]}"
 
 
-class Comment(models.Model):
+class Comment(BaseModel):
     """
     Represents a user comment on a course.
     Stores the comment text, associated user, and course.
