@@ -36,10 +36,17 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
+
     path('admin/', admin.site.urls),
     path('api-docs/swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('api-docs/re-doc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
-    # path('api/v1/', include(v1_api_routers)),
+
+    # api v1
+    path('api/v1/core/', include('apps.core.api.v1.routers')),
+    path('api/v1/package/', include('apps.package.api.v1.routers')),
+    path('api/v1/payment/', include('apps.payment.api.v1.routers')),
+    path('api/v1/textbook/', include('apps.textbook.api.v1.routers')),
+
 ]
 
 if settings.DEBUG:
